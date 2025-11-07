@@ -55,7 +55,7 @@ def create_qr_image(data: str) -> BytesIO:
 # -------------------------------
 # IMAGE → QR (hosted online)
 # -------------------------------
-@app.post("/generate-qr-image/")
+@app.post("/api/generate-qr-image/")
 async def generate_qr_image(file: UploadFile = File(...)):
     # Allowed image types
     allowed_exts = [".jpg", ".jpeg", ".png"]
@@ -99,7 +99,7 @@ async def generate_qr_image(file: UploadFile = File(...)):
 # -------------------------------
 # ANY FILE → QR (hosted online)
 # -------------------------------
-@app.post("/generate-qr-file/")
+@app.post("/api/generate-qr-file/")
 async def generate_qr_file(file: UploadFile = File(...)):
     temp_name = f"temp_{uuid.uuid4().hex}_{file.filename}"
     with open(temp_name, "wb") as f:
@@ -135,7 +135,7 @@ async def generate_qr_file(file: UploadFile = File(...)):
 # -------------------------------
 # LINK → QR
 # -------------------------------
-@app.post("/generate-qr-text/")
+@app.post("/api/generate-qr-text/")
 async def generate_qr_text(link: str = Form(...)):
     if not link.startswith(("http://", "https://")):
         return {"error": "Please enter a valid URL (must start with http:// or https://)"}

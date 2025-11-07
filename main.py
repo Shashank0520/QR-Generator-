@@ -11,7 +11,7 @@ app = FastAPI()
 
 from fastapi.staticfiles import StaticFiles
 
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -145,3 +145,4 @@ async def generate_qr_text(link: str = Form(...)):
             "Content-Disposition": f"attachment; filename=qr_link_{uuid.uuid4().hex}.jpg"
         },
     )
+

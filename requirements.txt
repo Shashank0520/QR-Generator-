@@ -1,3 +1,8 @@
 fastapi
 uvicorn
 qrcode
+requests
+python-multipart
+jinja2
+
+

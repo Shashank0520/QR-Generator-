@@ -28,19 +28,23 @@ generateBtn.addEventListener("click", async () => {
   if (selected === "link") {
     const link = document.getElementById("linkInput").value.trim();
     if (!link) return alert("Please enter a valid link!");
-    endpoint = "http://127.0.0.1:8000/generate-qr-text/";
+    endpoint = "/generate-qr-text/";
     formData.append("link", link);
   } else if (selected === "image") {
     const file = document.getElementById("imageInput").files[0];
     if (!file) return alert("Please upload an image file!");
-    endpoint = "http://127.0.0.1:8000/generate-qr-image/";
+    endpoint = "/generate-qr-image/";
     formData.append("file", file);
   } else if (selected === "file") {
     const file = document.getElementById("fileInput").files[0];
     if (!file) return alert("Please upload a file!");
-    endpoint = "http://127.0.0.1:8000/generate-qr-file/";
+    endpoint = "/generate-qr-file/";
     formData.append("file", file);
   }
+
+  // Disable button while generating
+  generateBtn.disabled = true;
+  generateBtn.textContent = "Generating...";
 
   try {
     const response = await fetch(endpoint, {
@@ -50,7 +54,7 @@ generateBtn.addEventListener("click", async () => {
 
     const contentType = response.headers.get("content-type");
 
-    // If response is JSON (error)
+    // Handle errors
     if (!response.ok) {
       if (contentType && contentType.includes("application/json")) {
         const err = await response.json();
@@ -61,7 +65,7 @@ generateBtn.addEventListener("click", async () => {
       return;
     }
 
-    // If response is image
+    // Success — show QR
     const blob = await response.blob();
     const qrUrl = URL.createObjectURL(blob);
 
@@ -70,5 +74,9 @@ generateBtn.addEventListener("click", async () => {
     resultDiv.classList.remove("hidden");
   } catch (error) {
     alert("Error generating QR: " + error);
+  } finally {
+    // ✅ Always re-enable button
+    generateBtn.disabled = false;
+    generateBtn.textContent = "Generate QR";
   }
 });

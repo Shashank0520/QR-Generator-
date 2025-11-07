@@ -28,17 +28,17 @@ generateBtn.addEventListener("click", async () => {
   if (selected === "link") {
     const link = document.getElementById("linkInput").value.trim();
     if (!link) return alert("Please enter a valid link!");
-    endpoint = "/generate-qr-text/";
+    endpoint = "https://qr-generator-bniq.onrender.com/generate-qr-text/";
     formData.append("link", link);
   } else if (selected === "image") {
     const file = document.getElementById("imageInput").files[0];
     if (!file) return alert("Please upload an image file!");
-    endpoint = "/generate-qr-image/";
+    endpoint = "https://qr-generator-bniq.onrender.com/generate-qr-image/";
     formData.append("file", file);
   } else if (selected === "file") {
     const file = document.getElementById("fileInput").files[0];
     if (!file) return alert("Please upload a file!");
-    endpoint = "/generate-qr-file/";
+    endpoint = "https://qr-generator-bniq.onrender.com/generate-qr-file/";
     formData.append("file", file);
   }
 

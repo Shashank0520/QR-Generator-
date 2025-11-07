@@ -6,12 +6,20 @@ from io import BytesIO
 from qrcode.constants import ERROR_CORRECT_H
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
 from fastapi.staticfiles import StaticFiles
 
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
+@app.get("/{full_path:path}")
+async def serve_react_app(full_path: str):
+    if full_path.startswith("generate-qr-"):
+        return {"error": "API endpoint; use POST"}
+    file_path = os.path.join("static", "index.html")
+    return FileResponse(file_path)
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,6 +30,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # -------------------------------
 # Function to generate QR code image
@@ -139,5 +148,3 @@ async def generate_qr_text(link: str = Form(...)):
             "Content-Disposition": f"attachment; filename=qr_link_{uuid.uuid4().hex}.jpg"
         },
     )
-
-

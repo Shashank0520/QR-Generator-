@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  background: #fff8f3;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  color: #d84315;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: #6d4c41;
+  margin-top: 15px;
+}
+
+select, input[type="text"], input[type="file"] {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 1rem;
+}
+
+select:focus, input:focus {
+  border-color: #d84315;
+  box-shadow: 0 0 5px rgba(216, 67, 21, 0.4);
+}
+
+button {
+  margin-top: 20px;
+  background: #d84315;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+}
+
+button:hover {
+  background: #bf360c;
+  transform: scale(1.03);
+}
+
+#result {
+  margin-top: 25px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#qrImage {
+  max-width: 200px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+#downloadLink {
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  background: #ff7043;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+#downloadLink:hover {
+  background: #f4511e;
+}
+
+.hidden {
+  display: none;
+}

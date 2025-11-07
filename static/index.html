@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniQR - Generate QR Code</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>MiniQR Generator</h1>
+
+    <!-- Dropdown for choosing upload type -->
+    <label for="option">Select Input Type:</label>
+    <select id="option">
+      <option value="link">Link</option>
+      <option value="image">Image</option>
+      <option value="file">File</option>
+    </select>
+
+    <!-- Input sections -->
+    <div id="link-section" class="input-section">
+      <input type="text" id="linkInput" placeholder="Enter URL here..." />
+    </div>
+
+    <div id="image-section" class="input-section hidden">
+      <input type="file" id="imageInput" accept="image/*" />
+    </div>
+
+    <div id="file-section" class="input-section hidden">
+      <input type="file" id="fileInput" />
+    </div>
+
+    <!-- Generate button -->
+    <button id="generateBtn">Generate QR</button>
+
+    <!-- QR output -->
+    <div id="result" class="hidden">
+      <h3>Generated QR:</h3>
+      <img id="qrImage" alt="QR Code will appear here" />
+      <a id="downloadLink" download="qr_code.jpg">Download QR</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

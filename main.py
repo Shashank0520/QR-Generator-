@@ -23,12 +23,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-def home():
-    return {"message": "Welcome to MiniQR! Upload any file, image, or link to get QR."}
-
-
 # -------------------------------
 # Function to generate QR code image
 # -------------------------------
@@ -145,4 +139,5 @@ async def generate_qr_text(link: str = Form(...)):
             "Content-Disposition": f"attachment; filename=qr_link_{uuid.uuid4().hex}.jpg"
         },
     )
+
 

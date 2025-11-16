@@ -7,9 +7,13 @@ const qrImage = document.getElementById("qrImage");
 const resultDiv = document.getElementById("result");
 const downloadLink = document.getElementById("downloadLink");
 
+// 🔥 Your Render backend base URL
+const API_BASE = "https://qr-generator-bniq.onrender.com";
+
 // Show/hide input sections based on dropdown
 optionSelect.addEventListener("change", () => {
   const value = optionSelect.value;
+
   linkSection.classList.add("hidden");
   imageSection.classList.add("hidden");
   fileSection.classList.add("hidden");
@@ -28,17 +32,19 @@ generateBtn.addEventListener("click", async () => {
   if (selected === "link") {
     const link = document.getElementById("linkInput").value.trim();
     if (!link) return alert("Please enter a valid link!");
-    endpoint = "https://qr-generator-bniq.onrender.com/api/generate-qr-text/";
+    endpoint = `${API_BASE}/api/generate-qr-text/`;
     formData.append("link", link);
+
   } else if (selected === "image") {
     const file = document.getElementById("imageInput").files[0];
     if (!file) return alert("Please upload an image file!");
-    endpoint = "https://qr-generator-bniq.onrender.com/api/generate-qr-image/";
+    endpoint = `${API_BASE}/api/generate-qr-image/`;
     formData.append("file", file);
+
   } else if (selected === "file") {
     const file = document.getElementById("fileInput").files[0];
     if (!file) return alert("Please upload a file!");
-    endpoint = "https://qr-generator-bniq.onrender.com/api/generate-qr-file/";
+    endpoint = `${API_BASE}/api/generate-qr-file/`;
     formData.append("file", file);
   }
 
@@ -50,13 +56,13 @@ generateBtn.addEventListener("click", async () => {
     const response = await fetch(endpoint, {
       method: "POST",
       body: formData,
+      mode: "cors",  // ensure cross-domain safe
     });
 
     const contentType = response.headers.get("content-type");
 
-    // Handle errors
     if (!response.ok) {
-      if (contentType && contentType.includes("application/json")) {
+      if (contentType?.includes("application/json")) {
         const err = await response.json();
         alert("Error: " + (err.error || "Something went wrong."));
       } else {
@@ -65,17 +71,21 @@ generateBtn.addEventListener("click", async () => {
       return;
     }
 
-    // Success — show QR
+    // Convert image blob to URL
     const blob = await response.blob();
     const qrUrl = URL.createObjectURL(blob);
 
     qrImage.src = qrUrl;
+    qrImage.classList.remove("hidden");
+
     downloadLink.href = qrUrl;
+    downloadLink.download = "qr_code.jpg";
+
     resultDiv.classList.remove("hidden");
+
   } catch (error) {
     alert("Error generating QR: " + error);
   } finally {
-    // ✅ Always re-enable button
     generateBtn.disabled = false;
     generateBtn.textContent = "Generate QR";
   }

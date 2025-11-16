@@ -77,13 +77,7 @@ async def generate_qr_image(file: UploadFile = File(...)):
 
         # Generate QR
         buf = create_qr_image(uploaded_url)
-        return StreamingResponse(
-            buf,
-            media_type="image/jpeg",
-            headers={
-                "Content-Disposition": f"attachment; filename=qr_image_{uuid.uuid4().hex}.jpg"
-            },
-        )
+        return StreamingResponse(buf, media_type="image/jpeg")
 
     except Exception as e:
         return {"error": f"Upload failed: {str(e)}"}
@@ -113,13 +107,7 @@ async def generate_qr_file(file: UploadFile = File(...)):
         uploaded_url = data["data"]["downloadPage"]
 
         buf = create_qr_image(uploaded_url)
-        return StreamingResponse(
-            buf,
-            media_type="image/jpeg",
-            headers={
-                "Content-Disposition": f"attachment; filename=qr_{uuid.uuid4().hex}.jpg"
-            },
-        )
+        return StreamingResponse(buf, media_type="image/jpeg")
 
     except Exception as e:
         return {"error": f"Upload failed: {str(e)}"}
@@ -134,13 +122,7 @@ async def generate_qr_text(link: str = Form(...)):
         return {"error": "Please enter a valid URL (must start with http:// or https://)"}
 
     buf = create_qr_image(link)
-    return StreamingResponse(
-        buf,
-        media_type="image/jpeg",
-        headers={
-            "Content-Disposition": f"attachment; filename=qr_link_{uuid.uuid4().hex}.jpg"
-        },
-    )
+    return StreamingResponse(buf, media_type="image/jpeg")
 
 @app.get("/{full_path:path}")
 async def serve_react_app(full_path: str):
@@ -148,3 +130,4 @@ async def serve_react_app(full_path: str):
         return {"error": "API endpoint; use POST"}
     file_path = os.path.join("static", "index.html")
     return FileResponse(file_path)
+
